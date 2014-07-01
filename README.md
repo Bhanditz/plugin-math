@@ -1,8 +1,8 @@
-math-core-fp11
+plugon-math-fp11
 ==============
 
-Plugin.IO Math Core Library
-===========================
+Plugin.IO Math Library
+======================
 
 The Plugin.IO math core library provides a set of classes that can be used for performing algebraic and geometric functions. This library focuses in the areas of computational geometry. 
 
