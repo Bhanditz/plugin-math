@@ -105,7 +105,7 @@ package io.plugin.math.algebra
 		/**
 		 * A flag representing if this object has been disposed. True if the <code>dispose()</code> method has been called.
 		 */
-		protected var mIsDisposed: Boolean = false;
+		protected var _isDisposed: Boolean = false;
 		
 		/**
 		 * Creates and returns a zero filled matrix object where all 16 values are 0.
@@ -164,14 +164,17 @@ package io.plugin.math.algebra
 			this.m30 = m30;		this.m31 = m31;		this.m32 = m32;		this.m33 = m33;
 		}
 		
-		
-		/**
-		 * Disposes of this objects and frees the object ready for garbage collection.
-		 */
-		public function dispose(): void
+		public function dispose():void
 		{
 			
-			mIsDisposed = true;
+		}
+		
+		/**
+		 * Gets a <code>Boolean</code> indicating if the <code>dispose()</code> method has been called and subsequently sets the isDisposed property to <code>true</code>.
+		 */
+		public function get isDisposed(): Boolean
+		{
+			return _isDisposed;
 		}
 		
 		/**
@@ -213,15 +216,6 @@ package io.plugin.math.algebra
 		public static function fromAxisAngle( axis: AVector, angle: Number ): HMatrix
 		{
 			return new HMatrix().rotation( axis, angle );
-		}
-		
-		
-		/**
-		 * Gets a <code>Boolean</code> indicating if the <code>dispose()</code> method has been called and subsequently sets the isDisposed property to <code>true</code>.
-		 */
-		public function get isDisposed(): Boolean
-		{
-			return mIsDisposed;
 		}
 		
 		/**
@@ -1288,6 +1282,135 @@ package io.plugin.math.algebra
 										+ m31.toFixed( 5 ).substr( 0, 7 ) + "\t\t"
 										+ m32.toFixed( 5 ).substr( 0, 7 ) + "\t\t"
 										+ m33.toFixed( 5 ).substr( 0, 7 ) + "\n";
+		}
+		
+		public function decompose(orientation:String = "eulerAngles"):Vector.<AVector>
+		{
+			
+			var q:HQuaternion;
+			
+			// Initial Tests - Not OK
+			
+			var vec:Vector.<AVector> = new Vector.<AVector>();
+			var m:HMatrix = this.clone();
+			var mr:Array = m.toTuple();
+			
+			var pos:AVector = new AVector(mr[12], mr[13], mr[14]);
+			mr.m30 = 0;
+			mr.m31 = 0;
+			mr.m32 = 0;
+			
+			var scale:AVector = new AVector();
+			
+			scale.x = Math.sqrt(mr[0]*mr[0] + mr[1]*mr[1] + mr[2]*mr[2]);
+			scale.y = Math.sqrt(mr[4]*mr[4] + mr[5]*mr[5] + mr[6]*mr[6]);
+			scale.z = Math.sqrt(mr[8]*mr[8] + mr[9]*mr[9] + mr[10]*mr[10]);
+			
+			if (mr[0]*(mr[5]*mr[10] - mr[6]*mr[9]) - mr[1]*(mr[4]*mr[10] - mr[6]*mr[8]) + mr[2]*(mr[4]*mr[9] - mr[5]*mr[8]) < 0)
+				scale.z = -scale.z;
+			
+			mr[0] /= scale.x;
+			mr[1] /= scale.x;
+			mr[2] /= scale.x;
+			mr[4] /= scale.y;
+			mr[5] /= scale.y;
+			mr[6] /= scale.y;
+			mr[8] /= scale.z;
+			mr[9] /= scale.z;
+			mr[10] /= scale.z;
+			
+			var rot:Array = new Array();
+			
+			switch (orientation) {
+				case "axisAngle":
+					
+					rot[3] = Math.acos((mr[0] + mr[5] + mr[10] - 1)/2);
+					
+					var len:Number = Math.sqrt((mr[6] - mr[9])*(mr[6] - mr[9]) + (mr[8] - mr[2])*(mr[8] - mr[2]) + (mr[1] - mr[4])*(mr[1] - mr[4]));
+					rot[0] = (mr[6] - mr[9])/len;
+					rot[1] = (mr[8] - mr[2])/len;
+					rot[2] = (mr[1] - mr[4])/len;
+					
+					break;
+				case "quaternion":
+					
+					var tr:Number = mr[0] + mr[5] + mr[10];
+					
+					if (tr > 0) {
+						rot[3] = Math.sqrt(1 + tr)/2;
+						
+						rot[0] = (mr[6] - mr[9])/(4*rot[3]);
+						rot[1] = (mr[8] - mr[2])/(4*rot[3]);
+						rot[2] = (mr[1] - mr[4])/(4*rot[3]);
+					} else if ((mr[0] > mr[5]) && (mr[0] > mr[10])) {
+						rot[0] = Math.sqrt(1 + mr[0] - mr[5] - mr[10])/2;
+						
+						rot[3] = (mr[6] - mr[9])/(4*rot[0]);
+						rot[1] = (mr[1] + mr[4])/(4*rot[0]);
+						rot[2] = (mr[8] + mr[2])/(4*rot[0]);
+					} else if (mr[5] > mr[10]) {
+						rot[1] = Math.sqrt(1 + mr[5] - mr[0] - mr[10])/2;
+						
+						rot[0] = (mr[1] + mr[4])/(4*rot[1]);
+						rot[3] = (mr[8] - mr[2])/(4*rot[1]);
+						rot[2] = (mr[6] + mr[9])/(4*rot[1]);
+					} else {
+						rot[2] = Math.sqrt(1 + mr[10] - mr[0] - mr[5])/2;
+						
+						rot[0] = (mr[8] + mr[2])/(4*rot.z);
+						rot[1] = (mr[6] + mr[9])/(4*rot.z);
+						rot[3] = (mr[1] - mr[4])/(4*rot.z);
+					}
+					
+					
+					break;
+				case "eulerAngles":
+					
+					rot[1] = Math.asin(-mr[2]);
+					
+					//var cos:number = Math.cos(rot.y);
+					
+					if (mr[2] != 1 && mr[2] != -1) {
+						rot[0] = Math.atan2(mr[6], mr[10]);
+						rot[2] = Math.atan2(mr[1], mr[0]);
+					} else {
+						rot[2] = 0;
+						rot[0] = Math.atan2(mr[4], mr[5]);
+					}
+					
+					break;
+			}
+			
+			vec.push(pos);
+			vec.push(AVector.fromTuple(rot));
+			vec.push(scale);
+			
+			return vec;
+		}
+		
+		public function recompose( components:Vector.<AVector>):Boolean
+		{
+			if (components.length < 3) return false
+			
+			//components[2].x == 0 || components[2].y == 0 || components[2].z == 0) return false;
+			
+			this.identity();
+			this.m00 *= components[2].x;
+			this.m11 *= components[2].y;
+			this.m22 *= components[2].z;
+			
+			var angle:Number = 0;
+			angle = -components[1].x;
+			this.multiplyEq( new HMatrix(1, 0, 0, 0, 0, Math.cos(angle), -Math.sin(angle), 0, 0, Math.sin(angle), Math.cos(angle), 0, 0, 0, 0, 0));
+			angle = -components[1].y;
+			this.multiplyEq(new HMatrix(Math.cos(angle), 0, Math.sin(angle), 0, 0, 1, 0, 0, -Math.sin(angle), 0, Math.cos(angle), 0, 0, 0, 0, 0));
+			angle = -components[1].z;
+			this.multiplyEq(new HMatrix(Math.cos(angle), -Math.sin(angle), 0, 0, Math.sin(angle), Math.cos(angle), 0, 0, 0, 0, 1, 0, 0, 0, 0, 0));
+			
+			//this.position = components[0];
+			this.m33 = 1;
+			
+			return true;
 		}
 		
 	}
