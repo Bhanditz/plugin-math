@@ -8,12 +8,11 @@
  * Distributed under the Boost Software License, Version 1.0.
  * http://www.boost.org/LICENSE_1_0.txt
  */
-package io.plugin.math.algebra 
-{
-	import io.plugin.core.interfaces.ICloneable;
-	import io.plugin.core.interfaces.IDisposable;
-	import io.plugin.core.interfaces.IEquatable;
-	import io.plugin.math.base.MathHelper;
+package plugin.math.algebra {
+	import plugin.core.interfaces.ICloneable;
+	import plugin.core.interfaces.IDisposable;
+	import plugin.core.interfaces.IEquatable;
+	import plugin.math.base.MathHelper;
 	
 	/**
 	 * A homogeneous representation of a quartenion in the three-dimensional space using the Cartesian coordinates x, y, and z.

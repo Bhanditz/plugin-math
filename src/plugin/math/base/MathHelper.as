@@ -8,10 +8,9 @@
  * Distributed under the Boost Software License, Version 1.0.
  * http://www.boost.org/LICENSE_1_0.txt
  */
-package io.plugin.math.base 
-{
-	import io.plugin.core.system.Assert;
-	import io.plugin.core.system.Random;
+package plugin.math.base {
+	import plugin.core.system.Assert;
+	import plugin.core.system.Random;
 	/**
 	 * ...
 	 * @author Gary Paluk

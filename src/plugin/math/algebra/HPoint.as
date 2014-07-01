@@ -8,9 +8,8 @@
  * Distributed under the Boost Software License, Version 1.0.
  * http://www.boost.org/LICENSE_1_0.txt
  */
-package io.plugin.math.algebra 
-{
-	import io.plugin.core.interfaces.ICloneable;
+package plugin.math.algebra {
+	import plugin.core.interfaces.ICloneable;
 	/**
 	 * A homogeneous point represents a point (x,y,z,w) in the three-dimensional space using the Cartesian coordinates
 	 * <code>x</code>, <code>y</code>, <code>z</code> and <code>w</code>.

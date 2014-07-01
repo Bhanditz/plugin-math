@@ -8,13 +8,13 @@
  * Distributed under the Boost Software License, Version 1.0.
  * http://www.boost.org/LICENSE_1_0.txt
  */
-package io.plugin.math.intersection 
+package plugin.math.intersection
 {
-	import io.plugin.math.algebra.AVector;
-	import io.plugin.math.base.MathHelper;
-	import io.plugin.math.intersection.enum.IntersectionType;
-	import io.plugin.math.objects3d.Line3;
-	import io.plugin.math.objects3d.Triangle3;
+	import plugin.math.algebra.AVector;
+	import plugin.math.base.MathHelper;
+	import plugin.math.intersection.enum.IntersectionType;
+	import plugin.math.objects3d.Line3;
+	import plugin.math.objects3d.Triangle3;
 	/**
 	 * ...
 	 * @author Gary Paluk

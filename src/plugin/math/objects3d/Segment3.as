@@ -8,10 +8,9 @@
  * Distributed under the Boost Software License, Version 1.0.
  * http://www.boost.org/LICENSE_1_0.txt
  */
-package io.plugin.math.objects3d 
-{
-	import io.plugin.math.algebra.APoint;
-	import io.plugin.math.algebra.AVector;
+package plugin.math.objects3d {
+	import plugin.math.algebra.APoint;
+	import plugin.math.algebra.AVector;
 	/**
 	 * ...
 	 * @author Gary Paluk

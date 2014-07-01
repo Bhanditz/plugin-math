@@ -8,11 +8,10 @@
  * Distributed under the Boost Software License, Version 1.0.
  * http://www.boost.org/LICENSE_1_0.txt
  */
-package io.plugin.math.algebra 
-{
-	import io.plugin.core.interfaces.ICloneable;
-	import io.plugin.core.interfaces.IDisposable;
-	import io.plugin.core.interfaces.IEquatable;
+package plugin.math.algebra {
+	import plugin.core.interfaces.ICloneable;
+	import plugin.core.interfaces.IDisposable;
+	import plugin.core.interfaces.IEquatable;
 	
 	/**
 	 * An affine vector represents a vector as (x,y,z,0) in the three-dimensional space using the Cartesian coordinates x, y, and z.
