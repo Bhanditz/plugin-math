@@ -1,5 +1,5 @@
-plugon-math-fp11
-==============
+plugin-math
+===========
 
 Plugin.IO Math Library
 ======================
@@ -25,7 +25,7 @@ The Plugin.IO math library is designed to be very fast but due to the extra func
 Unit Tests
 ----------
 
-* [math-tests-fp11](https://github.com/PluginIO/math-tests-fp11/ "math-tests-fp11")
+* [math-tests-fp11](https://github.com/Zest3D/math-tests/ "math-tests")
 
 
 
