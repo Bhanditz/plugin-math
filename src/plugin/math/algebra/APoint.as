@@ -12,6 +12,7 @@ package plugin.math.algebra {
 	import plugin.core.interfaces.ICloneable;
 	import plugin.core.interfaces.IDisposable;
 	import plugin.core.interfaces.IEquatable;
+	import plugin.core.interfaces.IResetable;
 	
 	/**
 	 * An affine point represents a point (x,y,z,1) in the three-dimensional space using the Cartesian coordinates x, y, and z. If you do not specify 
@@ -19,7 +20,7 @@ package plugin.math.algebra {
 	 * 
 	 * @author Gary Paluk
 	 */
-	public class APoint implements IEquatable, ICloneable, IDisposable
+	public class APoint implements IEquatable, ICloneable, IDisposable, IResetable
 	{
 		
 		/**
@@ -92,6 +93,15 @@ package plugin.math.algebra {
 			this.x = x;
 			this.y = y;
 			this.z = z;
+			_w = 1;
+			_isDisposed = false;
+		}
+		
+		public function reset():void
+		{
+			x = 0;
+			y = 0;
+			z = 0;
 			_w = 1;
 			_isDisposed = false;
 		}

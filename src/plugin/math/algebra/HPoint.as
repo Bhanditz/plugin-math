@@ -10,13 +10,15 @@
  */
 package plugin.math.algebra {
 	import plugin.core.interfaces.ICloneable;
+	import plugin.core.interfaces.IDisposable;
+	import plugin.core.interfaces.IResetable;
 	/**
 	 * A homogeneous point represents a point (x,y,z,w) in the three-dimensional space using the Cartesian coordinates
 	 * <code>x</code>, <code>y</code>, <code>z</code> and <code>w</code>.
 	 * 
 	 * @author Gary Paluk
 	 */
-	public class HPoint implements ICloneable
+	public class HPoint implements ICloneable, IDisposable, IResetable
 	{
 		/**
 		 * The first element of a <code>HPoint</code> object, such as the <code>x</code> coordinate of a point in the three-dimensional space.
@@ -39,6 +41,8 @@ package plugin.math.algebra {
 		 */
 		public var w: Number;
 		
+		private var _isDisposed:Boolean;
+		
 		/**
 		 * An homogeneous point represents a point (x,y,z,w) in the three-dimensional space using the Cartesian coordinates x, y, z and w. If you do not specify 
 		 * a parameter for the constructor, an <code>APoint</code> Object is created with the elements (0,0,0,0).
@@ -54,7 +58,23 @@ package plugin.math.algebra {
 			this.y = y;
 			this.z = z;
 			this.w = w;
+			_isDisposed = false;
 		}
+		
+		public function reset():void
+		{
+			x = 0;
+			y = 0;
+			z = 0;
+			w = 0;
+			_isDisposed = false;
+		}
+		
+		public function dispose():void
+		{
+			_isDisposed = true;
+		}
+		
 		
 		/**
 		 * Returns a new <code>HPoint</code> object that is an exact copy of the current <code>HPoint</code> object.
@@ -121,6 +141,11 @@ package plugin.math.algebra {
 								", y:" + y.toFixed( 5 ).substr( 0, 7 ) +
 								", z:" + z.toFixed( 5 ).substr( 0, 7 ) +
 								", w:" + w.toFixed( 5 ).substr( 0, 7 ) + ")";
+		}
+		
+		public function get isDisposed():Boolean 
+		{
+			return _isDisposed;
 		}
 		
 	}

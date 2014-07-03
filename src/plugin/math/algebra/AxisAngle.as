@@ -12,13 +12,14 @@ package plugin.math.algebra {
 	import plugin.core.interfaces.ICloneable;
 	import plugin.core.interfaces.IDisposable;
 	import plugin.core.interfaces.IEquatable;
+	import plugin.core.interfaces.IResetable;
 	
 	/**
 	 * A representation of an axis and angle.
 	 * 
 	 * @author Gary Paluk
 	 */
-	public class AxisAngle implements IDisposable, IEquatable, ICloneable
+	public class AxisAngle implements IDisposable, IEquatable, ICloneable, IResetable
 	{
 		/**
 		 * An <code>AVector</code> defining the axis.
@@ -47,6 +48,12 @@ package plugin.math.algebra {
 			this.angle = angle;
 			
 			_isDisposed = false;
+		}
+		
+		public function reset():void
+		{
+			axis.reset();
+			angle = 0;
 		}
 		
 		/**

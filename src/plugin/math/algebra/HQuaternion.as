@@ -12,6 +12,7 @@ package plugin.math.algebra {
 	import plugin.core.interfaces.ICloneable;
 	import plugin.core.interfaces.IDisposable;
 	import plugin.core.interfaces.IEquatable;
+	import plugin.core.interfaces.IResetable;
 	import plugin.math.base.MathHelper;
 	
 	/**
@@ -19,7 +20,7 @@ package plugin.math.algebra {
 	 * 
 	 * @author Gary Paluk
 	 */
-	public class HQuaternion implements IDisposable, IEquatable, ICloneable
+	public class HQuaternion implements IDisposable, IEquatable, ICloneable, IResetable
 	{
 		
 		/**
@@ -104,6 +105,15 @@ package plugin.math.algebra {
 			this.x = x;
 			this.y = y;
 			this.z = z;
+		}
+		
+		public function reset():void
+		{
+			w = 0;
+			x = 0;
+			y = 0;
+			z = 0;
+			_isDisposed = false;
 		}
 		
 		/**

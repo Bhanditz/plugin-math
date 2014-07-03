@@ -11,12 +11,13 @@
 package plugin.math.algebra {
 	import plugin.core.interfaces.ICloneable;
 	import plugin.core.interfaces.IDisposable;
+	import plugin.core.interfaces.IResetable;
 	/**
 	 * A homogeneneous representation of a plane in the three-dimensional space using the Cartesian coordinates x, y, and z.
 	 * 
 	 * @author Gary Paluk
 	 */
-	public class HPlane implements IDisposable, ICloneable
+	public class HPlane implements IDisposable, ICloneable, IResetable
 	{
 		/**
 		 * The normal property.
@@ -44,6 +45,13 @@ package plugin.math.algebra {
 			mNormal = normal;
 			mConstant = -constant;
 			
+			mIsDisposed = false;
+		}
+		
+		public function reset():void
+		{
+			mNormal.reset();
+			mConstant = 0;
 			mIsDisposed = false;
 		}
 		

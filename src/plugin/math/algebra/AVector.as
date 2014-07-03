@@ -12,6 +12,7 @@ package plugin.math.algebra {
 	import plugin.core.interfaces.ICloneable;
 	import plugin.core.interfaces.IDisposable;
 	import plugin.core.interfaces.IEquatable;
+	import plugin.core.interfaces.IResetable;
 	
 	/**
 	 * An affine vector represents a vector as (x,y,z,0) in the three-dimensional space using the Cartesian coordinates x, y, and z.
@@ -22,7 +23,7 @@ package plugin.math.algebra {
 	 * 
 	 * @author Gary Paluk - http://www.plugin.io
 	 */
-	public class AVector implements IDisposable, ICloneable, IEquatable
+	public class AVector implements IDisposable, ICloneable, IEquatable, IResetable
 	{
 		
 		/**
@@ -72,7 +73,6 @@ package plugin.math.algebra {
 			_w = 0;
 			
 			mIsDisposed = false;
-			
 		}
 		
 		public static function fromTuple( tuple: Array ): AVector
@@ -104,6 +104,18 @@ package plugin.math.algebra {
 		public function clone(): *
 		{
 			return new AVector( x, y, z );
+		}
+		
+		/**
+		 * Resets this <code>AVector</code> object to a blank new default set of values, usually for pooling purposes.
+		 */
+		public function reset():void
+		{
+			x = 0;
+			y = 0;
+			z = 0;
+			_w = 0;
+			mIsDisposed = false;
 		}
 		
 		/**

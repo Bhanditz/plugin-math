@@ -12,13 +12,14 @@ package plugin.math.algebra {
 	import plugin.core.interfaces.ICloneable;
 	import plugin.core.interfaces.IDisposable;
 	import plugin.core.interfaces.IEquatable;
+	import plugin.core.interfaces.IResetable;
 	
 	/**
 	 * A homogeneous 4x4 matrix containing 16 elements, used to store rotation, scale, translation and projections.
 	 * 
 	 * @author Gary Paluk
 	 */
-	public class HMatrix implements IEquatable, ICloneable, IDisposable
+	public class HMatrix implements IEquatable, ICloneable, IDisposable, IResetable
 	{
 		
 		/**
@@ -163,9 +164,16 @@ package plugin.math.algebra {
 			this.m30 = m30;		this.m31 = m31;		this.m32 = m32;		this.m33 = m33;
 		}
 		
+		public function reset():void
+		{
+			identity();
+			TEMP.identity();
+			_isDisposed = false;
+		}
+		
 		public function dispose():void
 		{
-			
+			_isDisposed = true;
 		}
 		
 		/**
