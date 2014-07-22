@@ -94,7 +94,7 @@ package plugin.math.memory {
 			return HPOINT.push(o);
 		}
 		
-		public static function getHQuaternion( w:Number, z:Number = 0, y:Number = 0, z:Number = 0 ):HQuaternion
+		public static function getHQuaternion( w:Number, x:Number = 0, y:Number = 0, z:Number = 0 ):HQuaternion
 		{
 			var q:HQuaternion = HQUATERNION.pop();
 			q.set( w, x, y, z );

@@ -9,7 +9,6 @@
  * http://www.boost.org/LICENSE_1_0.txt
  */
 package plugin.math.base {
-	import plugin.core.system.Assert;
 	import plugin.core.system.Random;
 	/**
 	 * ...
